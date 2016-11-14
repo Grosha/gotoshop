@@ -4,6 +4,8 @@ import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -40,6 +42,11 @@ public class BaseTest implements Variable, Locators {
     public void assertEqualsText(By locator, String text) {
         String textElement = driver.findElement(locator).getText();
         Assert.assertEquals(text, textElement);
+    }
+
+    public void assertEqualsInt(By locator, int number) {
+        int numberElement = Integer.parseInt(driver.findElement(locator).getText());
+        Assert.assertEquals(numberElement, number);
     }
 
     public AppiumDriver<WebElement> findElement(By by) {
@@ -88,5 +95,50 @@ public class BaseTest implements Variable, Locators {
         driver.findElement(By.name(shopName)).click();
         //check title
         assertEqualsText(toolbarTitle, shopName);
+    }
+
+    public void enterUserData(String email, String password, boolean remember) {
+        //enter email and password - sign in
+        driver.findElement(locatorFieldEmail).clear();
+        driver.findElement(locatorFieldEmail).sendKeys(email);
+        driver.findElement(locatorFieldPassword).sendKeys(password);
+        if (remember == true) {
+            rememberMeClick();
+        }
+        driver.findElement(locatorButtonEnter).click();
+    }
+
+    public void rememberMeClick(){
+        driver.findElement(locatorCheckboxRememberMe).click();
+    }
+
+    public void logOut() {
+        //log out
+        WebDriverWait wait = new WebDriverWait(driver, 5L);
+        driver.findElement(locatorLogOut).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locatorButtonEnter));
+        driver.findElement(locatorButtonEnter).isDisplayed();
+    }
+
+    public void checkAccountData(String name, String email) {
+        //check account's data
+        WebDriverWait wait = new WebDriverWait(driver, 5L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locatorFieldNickname));
+        assertEqualsText(toolbarTitle, drawerMyAccountRU);
+        assertEqualsText(locatorFieldNickname, name);
+        assertEqualsText(locatorFieldEmail, email);
+    }
+
+    public void signIn() throws InterruptedException {
+        //enter to the feature from drawer
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
+
+        //check title
+        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
+
+        //sign in
+        enterUserData(email, password, false);
+        //check account's data
+        checkAccountData(nickName, email);
     }
 }

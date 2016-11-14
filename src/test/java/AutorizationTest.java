@@ -1,16 +1,10 @@
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-
-/**
- * Created by groshkka on 09.11.2016.
- */
 public class AutorizationTest extends BaseTest {
 
     @Test
@@ -54,16 +48,7 @@ public class AutorizationTest extends BaseTest {
 
     @Test
     public void logInOldUserTest() throws InterruptedException {
-        //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-
-        //check title
-        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
-
-        //sign in
-        signIn(email, password, false);
-        //check account's data
-        checkAccountData(nickName, email);
+        signIn();
     }
 
     @Test
@@ -75,7 +60,7 @@ public class AutorizationTest extends BaseTest {
         //assertEqualsText(toolbarTitle, drawerMyAccountRU);
 
         //sign in
-        signIn(email, password, true);
+        enterUserData(email, password, true);
         //check account's data
         checkAccountData(nickName, email);
         //log out
@@ -113,7 +98,7 @@ public class AutorizationTest extends BaseTest {
         //form filling
         enterNewUserData(name, email);
         //sign in
-        signIn(email, password, false);
+        enterUserData(email, password, false);
         //check account's data
         checkAccountData(name, email);
     }
@@ -135,7 +120,7 @@ public class AutorizationTest extends BaseTest {
         //form filling
         enterNewUserData(name, email);
         //sign in
-        signIn(email, password, false);
+        enterUserData(email, password, false);
         //check account's data
         checkAccountData(name, email);
         //change password
@@ -143,31 +128,31 @@ public class AutorizationTest extends BaseTest {
         //log out
         logOut();
         //sign in with new password
-        signIn(email, newPassword, false);
+        enterUserData(email, newPassword, false);
         //check account's data
         checkAccountData(name, email);
         //log out
         logOut();
     }
 
-    private void checkAccountData(String name, String email) {
+    /*private void checkAccountData(String name, String email) {
         //check account's data
         WebDriverWait wait = new WebDriverWait(driver, 5L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locatorFieldNickname));
         assertEqualsText(toolbarTitle, drawerMyAccountRU);
         assertEqualsText(locatorFieldNickname, name);
         assertEqualsText(locatorFieldEmail, email);
-    }
+    }*/
 
-    private void logOut() {
+    /*private void logOut() {
         //log out
         WebDriverWait wait = new WebDriverWait(driver, 5L);
         driver.findElement(locatorLogOut).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(locatorButtonEnter));
         driver.findElement(locatorButtonEnter).isDisplayed();
-    }
+    }*/
 
-    private void signIn(String email, String password, boolean remember) {
+    /*private void enterUserData(String email, String password, boolean remember) {
         //enter email and password - sign in
         driver.findElement(locatorFieldEmail).clear();
         driver.findElement(locatorFieldEmail).sendKeys(email);
@@ -176,7 +161,7 @@ public class AutorizationTest extends BaseTest {
             rememberMeClick();
         }
         driver.findElement(locatorButtonEnter).click();
-    }
+    }*/
 
     private void enterNewUserData(String name, String email) {
         //form filling
@@ -198,8 +183,8 @@ public class AutorizationTest extends BaseTest {
         driver.findElement(locatorButtonSave).click();
     }
 
-    private void rememberMeClick(){
+    /*private void rememberMeClick(){
         driver.findElement(locatorCheckboxRememberMe).click();
-    }
+    }*/
 
 }

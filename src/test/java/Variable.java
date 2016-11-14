@@ -1,6 +1,3 @@
-/**
- * Created by groshkka on 07.11.2016.
- */
 public interface Variable {
     String packageGoToShop = "com.laitauril.gotoshop";
     String packageSkidkaOnline = "com.laitauril.skidkaonline";
@@ -8,6 +5,7 @@ public interface Variable {
     String mainActivity = ".app.activity.SplashActivity";
     String SILPO = "Сильпо";
     String COMFY = "Comfy";
+    String testComment = "Хороша акція";
 
     String drawerSaleRU = "Акции";
     String drawerMyAccountRU = "Мой профиль";

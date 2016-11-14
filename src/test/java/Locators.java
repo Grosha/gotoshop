@@ -1,8 +1,4 @@
 import org.openqa.selenium.By;
-
-/**
- * Created by groshkka on 07.11.2016.
- */
 public interface Locators {
     //open drawer
     By locatorOpenDrawer = By.xpath("//android.widget.ImageButton");
@@ -38,6 +34,13 @@ public interface Locators {
     By locatorLike = By.id("iconLike");
     By locatorDislike = By.id("iconDislike");
     By locatorStar = By.id("star");
+    By locatorMapView = By.id("mapView");
+    By locatorIconMap = By.id("iconMap");
+    By locatorNumComments = By.id("numComments");
+    By locatorMyComment = By.id("myComment");
+    By locatorSendComment = By.id("sendComment");
+    By locatorNumberSales = By.xpath("//android.widget.TextView[ancestor::android.widget.RelativeLayout[@resource-id,'nav_favorite']]");
+    By locatorFindComment = By.xpath("//android.widget.TextView[@text,'Хороша акція']");
 
     //drawer menu
     By locatorDrawerCity = By.xpath("//android.widget.CheckedTextView[@text='Город']");
