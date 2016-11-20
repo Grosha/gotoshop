@@ -5,11 +5,16 @@ public interface Variable {
     String mainActivity = ".app.activity.SplashActivity";
     String SILPO = "Сильпо";
     String COMFY = "Comfy";
-    String testComment = "Хороша акція";
+    String testComment = "Chorosha akcia";
+    String comment = "Отзывы";
+    String resultNothingFind = "Ничего не найдено";
+    String apkName = "GoToShop.net.ua";
 
     String drawerSaleRU = "Акции";
     String drawerMyAccountRU = "Мой профиль";
     String drawerCategoryRU = "Категории";
+    String toolbarCityRU = "Выбор города";
+    String cityDneprRU = "днепр";
     String email = "testgrosha23@gmail.com";
     String emailTest = "@test.com";
     String nickName = "Hs Ah";
@@ -17,4 +22,5 @@ public interface Variable {
     String password = "gotoshop";
     String newPassword = "GotoshoP";
     String toolbarRegistration = "Регистрация";
+    String toolbarFavorite = "Избранное";
 }

@@ -10,19 +10,13 @@ public class AutorizationTest extends BaseTest {
     @Test
     public void openMyAccountTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-        //check title
-        assertEqualsText(toolbarTitle, drawerMyAccountRU);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization,drawerMyAccountRU);
     }
 
     @Test
     public void loginGoogleTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-
-        //check title
-        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
-
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
         driver.findElement(locatorLoginGoogle).click();
         timeOut(3L);
 
@@ -42,7 +36,7 @@ public class AutorizationTest extends BaseTest {
         driver.switchTo().window(mainWinID);
         timeOut(3L);
 
-        assertEqualsText(toolbarTitle, drawerMyAccountRU);
+        assertEqualsText(locatorToolbarTitle, drawerMyAccountRU);
         assertEqualsText(locatorFieldEmail, email);
     }
 
@@ -54,17 +48,13 @@ public class AutorizationTest extends BaseTest {
     @Test
     public void logInLogOutOldUserTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-
-        //check title
-        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
-
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
         //sign in
         enterUserData(email, password, true);
         //check account's data
         checkAccountData(nickName, email);
         //log out
-        logOut();
+        clickLogOut();
         //check function remember me
         assertEqualsText(locatorFieldEmail, email);
         //off checkbox remember me
@@ -73,10 +63,6 @@ public class AutorizationTest extends BaseTest {
 
     @Test
     public void logOutUserTest() throws InterruptedException {
-        //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-        //check title
-        assertEqualsText(toolbarTitle, drawerMyAccountRU);
         //log out
         logOut();
     }
@@ -84,33 +70,15 @@ public class AutorizationTest extends BaseTest {
     @Test
     public void registerNewUserTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-
-        //check title
-        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
-
-        driver.findElement(locatorRegistration).click();
-        assertEqualsText(locatorRegistration, toolbarRegistration);
-        //create new user name and email
-        String temp = String.valueOf(new Date().getTime());
-        String name = temp + testNickName;
-        String email = temp + emailTest;
-        //form filling
-        enterNewUserData(name, email);
-        //sign in
-        enterUserData(email, password, false);
-        //check account's data
-        checkAccountData(name, email);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
+        createNewUser();
+        clickLogOut();
     }
 
     @Test
     public void changePasswordAndSignIn() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-
-        //check title
-        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
-
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
         driver.findElement(locatorRegistration).click();
         assertEqualsText(locatorRegistration, toolbarRegistration);
         //create new user name and email
@@ -126,42 +94,14 @@ public class AutorizationTest extends BaseTest {
         //change password
         changePassword(password, newPassword);
         //log out
-        logOut();
+        clickLogOut();
         //sign in with new password
         enterUserData(email, newPassword, false);
         //check account's data
         checkAccountData(name, email);
         //log out
-        logOut();
+        clickLogOut();
     }
-
-    /*private void checkAccountData(String name, String email) {
-        //check account's data
-        WebDriverWait wait = new WebDriverWait(driver, 5L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locatorFieldNickname));
-        assertEqualsText(toolbarTitle, drawerMyAccountRU);
-        assertEqualsText(locatorFieldNickname, name);
-        assertEqualsText(locatorFieldEmail, email);
-    }*/
-
-    /*private void logOut() {
-        //log out
-        WebDriverWait wait = new WebDriverWait(driver, 5L);
-        driver.findElement(locatorLogOut).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locatorButtonEnter));
-        driver.findElement(locatorButtonEnter).isDisplayed();
-    }*/
-
-    /*private void enterUserData(String email, String password, boolean remember) {
-        //enter email and password - sign in
-        driver.findElement(locatorFieldEmail).clear();
-        driver.findElement(locatorFieldEmail).sendKeys(email);
-        driver.findElement(locatorFieldPassword).sendKeys(password);
-        if (remember == true) {
-            rememberMeClick();
-        }
-        driver.findElement(locatorButtonEnter).click();
-    }*/
 
     private void enterNewUserData(String name, String email) {
         //form filling
@@ -183,8 +123,19 @@ public class AutorizationTest extends BaseTest {
         driver.findElement(locatorButtonSave).click();
     }
 
-    /*private void rememberMeClick(){
-        driver.findElement(locatorCheckboxRememberMe).click();
-    }*/
+    private void createNewUser() {
+        driver.findElement(locatorRegistration).click();
+        assertEqualsText(locatorRegistration, toolbarRegistration);
+        //create new user name and email
+        String temp = String.valueOf(new Date().getTime());
+        String name = temp + testNickName;
+        String email = temp + emailTest;
+        //form filling
+        enterNewUserData(name, email);
+        //sign in
+        enterUserData(email, password, false);
+        //check account's data
+        checkAccountData(name, email);
+    }
 
 }

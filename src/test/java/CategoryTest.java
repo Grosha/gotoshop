@@ -13,9 +13,7 @@ public class CategoryTest extends BaseTest {
     @Test
     public void openCategoryShopsTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory);
-        //check title
-        assertEqualsText(toolbarTitle, drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
         //open category
         openCategory();
     }
@@ -23,9 +21,7 @@ public class CategoryTest extends BaseTest {
     @Test
     public void openShopFromCategoryTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory);
-        //check title
-        assertEqualsText(toolbarTitle, drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
         //open category
         openCategory();
         //open shop
@@ -35,9 +31,7 @@ public class CategoryTest extends BaseTest {
     @Test
     public void openShopThroughSearchFromCategoryTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory);
-        //check title
-        assertEqualsText(toolbarTitle, drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
         //open category
         openCategory();
         //open shop
@@ -47,9 +41,7 @@ public class CategoryTest extends BaseTest {
     //@Test
     public void checkCountSalesTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory);
-        //check title
-        assertEqualsText(toolbarTitle, drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
         //open category
         openCategory();
         //open shop
@@ -69,7 +61,7 @@ public class CategoryTest extends BaseTest {
         //find random category and enter
         driver.findElement(By.name(category)).click();
         //check title
-        assertEqualsText(toolbarTitle, category);
+        assertEqualsText(locatorToolbarTitle, category);
     }
 
     private void getCountSales(String count) {

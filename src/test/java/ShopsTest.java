@@ -33,7 +33,7 @@ public class ShopsTest extends BaseTest {
         driver.findElement(locatorSaleImage).click();
 
         //check toolbar name
-        assertEqualsText(toolbarTitle, drawerSaleRU);
+        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
         //check saleName
         assertEqualsText(locatorSaleTitle, saleName);
     }

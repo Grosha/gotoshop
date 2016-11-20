@@ -46,6 +46,8 @@ public class BaseTest implements Variable, Locators {
 
     public void assertEqualsInt(By locator, int number) {
         int numberElement = Integer.parseInt(driver.findElement(locator).getText());
+        System.out.println(numberElement);
+        System.out.println(number);
         Assert.assertEquals(numberElement, number);
     }
 
@@ -66,12 +68,14 @@ public class BaseTest implements Variable, Locators {
         timeOut(10L);
     }
 
-    public void enterToTheFeatureFromDrawer(By drawerFeatureName) throws InterruptedException {
+    public void enterToTheFeatureFromDrawer(By drawerFeatureName, String toolbarTitle) throws InterruptedException {
         //open drawer
         openDrawer();
         //enter to the feature from drawer
         driver.findElement(drawerFeatureName).click();
         timeOut(10L);
+        //check title
+        assertEqualsText(locatorToolbarTitle, toolbarTitle);
     }
 
     public void openShop(By shopIdentofocation, boolean search) {
@@ -94,7 +98,7 @@ public class BaseTest implements Variable, Locators {
         //find random shop and enter
         driver.findElement(By.name(shopName)).click();
         //check title
-        assertEqualsText(toolbarTitle, shopName);
+        assertEqualsText(locatorToolbarTitle, shopName);
     }
 
     public void enterUserData(String email, String password, boolean remember) {
@@ -108,11 +112,11 @@ public class BaseTest implements Variable, Locators {
         driver.findElement(locatorButtonEnter).click();
     }
 
-    public void rememberMeClick(){
+    public void rememberMeClick() {
         driver.findElement(locatorCheckboxRememberMe).click();
     }
 
-    public void logOut() {
+    public void clickLogOut() {
         //log out
         WebDriverWait wait = new WebDriverWait(driver, 5L);
         driver.findElement(locatorLogOut).click();
@@ -124,21 +128,49 @@ public class BaseTest implements Variable, Locators {
         //check account's data
         WebDriverWait wait = new WebDriverWait(driver, 5L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locatorFieldNickname));
-        assertEqualsText(toolbarTitle, drawerMyAccountRU);
+        assertEqualsText(locatorToolbarTitle, drawerMyAccountRU);
         assertEqualsText(locatorFieldNickname, name);
         assertEqualsText(locatorFieldEmail, email);
     }
 
     public void signIn() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization);
-
-        //check title
-        //assertEqualsText(toolbarTitle, drawerMyAccountRU);
-
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
         //sign in
         enterUserData(email, password, false);
         //check account's data
         checkAccountData(nickName, email);
+    }
+
+    public void logOut() throws InterruptedException {
+        //enter to the feature from drawer
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        //log out
+        clickLogOut();
+    }
+
+    public void waitElement(By element) {
+        //wait comment
+        WebDriverWait wait = new WebDriverWait(driver, 5L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
+
+    public void checkCountSalesDrawer(int count) throws InterruptedException {
+        //open drawer
+        openDrawer();
+        //compare count sales
+        Thread.sleep(500);
+        assertEqualsInt(locatorNumberSales, count);
+    }
+
+    public int getCountSales() throws InterruptedException {
+        //open drawer
+        openDrawer();
+        openDrawer();
+        //save number love sales
+        Thread.sleep(500);
+        int numberSales = Integer.parseInt(driver.findElement(locatorNumberSales).getText());
+        System.out.println(numberSales);
+        return numberSales;
     }
 }

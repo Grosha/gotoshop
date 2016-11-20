@@ -6,8 +6,9 @@ public interface Locators {
     By openFirstShop = By.id("listView");
     By openShop = By.id("name");
     By openShopCategory = By.id("text");
+    By locatorDrawerNumberSales = By.id("text");
     By openCategoryShop = By.id("textViewName");
-    By toolbarTitle = By.className("android.widget.TextView");
+    By locatorToolbarTitle = By.className("android.widget.TextView");
     By shopInput = By.id("shop_input");
     By locatorSaleTitle = By.xpath("//android.widget.RelativeLayout[contains(@resource-id,'tTitle')]//android.widget.TextView[contains(@resource-id,'title')]");
     By locatorSaleImage = By.id("tImage");
@@ -39,8 +40,14 @@ public interface Locators {
     By locatorNumComments = By.id("numComments");
     By locatorMyComment = By.id("myComment");
     By locatorSendComment = By.id("sendComment");
-    By locatorNumberSales = By.xpath("//android.widget.TextView[ancestor::android.widget.RelativeLayout[@resource-id,'nav_favorite']]");
-    By locatorFindComment = By.xpath("//android.widget.TextView[@text,'Хороша акція']");
+    By locatorNumberSales = By.xpath("//android.widget.RelativeLayout[contains(@resource-id,'nav_favorite')]//android.widget.TextView[contains(@resource-id,'text')]");
+    By locatorFindComment = By.xpath("//android.widget.TextView[@text,'Chorosha akcia']");
+    By locatorCityDnepr = By.xpath("//android.widget.RelativeLayout//android.widget.TextView[@text,'Днепр']");
+    By locatorSearchCity = By.id("search_city_input");
+    By locatorTextEmpty = By.id("empty");
+    By locatorDeleteAllSales = By.id("delete_all");
+    By locatorDismisDeleteSales = By.id("button2");
+    By locatorAcceptDeleteSales = By.id("button1");
 
     //drawer menu
     By locatorDrawerCity = By.xpath("//android.widget.CheckedTextView[@text='Город']");
@@ -48,7 +55,7 @@ public interface Locators {
     By locatorDrawerShops = By.xpath("//android.widget.CheckedTextView[@text='Город']");
     By locatorDrawerCategory = By.xpath("//android.widget.CheckedTextView[@text='Категории']");
     By locatorDrawerSales = By.xpath("//android.widget.CheckedTextView[@text='Акции']");
-    By locatorDrawerFavorite = By.xpath("//android.widget.CheckedTextView[@text='Город']");
+    By locatorDrawerFavorite = By.xpath("//android.widget.CheckedTextView[@text='Избранное']");
     By locatorDrawerSettings = By.xpath("//android.widget.CheckedTextView[@text='Город']");
     By locatorDrawerCallUs = By.xpath("//android.widget.CheckedTextView[@text='Город']");
 }
