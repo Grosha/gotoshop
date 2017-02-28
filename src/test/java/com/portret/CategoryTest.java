@@ -1,3 +1,5 @@
+package com.portret;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
@@ -5,15 +7,17 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Random;
 
+import static org.testng.Assert.assertEquals;
+
 /**
  * Created by groshkka on 12.11.2016.
  */
-public class CategoryTest extends BaseTest {
+public class CategoryTest extends com.portret.BaseTest {
 
     @Test
     public void openCategoryShopsTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory, drawerCategoryRU);
         //open category
         openCategory();
     }
@@ -21,7 +25,7 @@ public class CategoryTest extends BaseTest {
     @Test
     public void openShopFromCategoryTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory, drawerCategoryRU);
         //open category
         openCategory();
         //open shop
@@ -31,7 +35,7 @@ public class CategoryTest extends BaseTest {
     @Test
     public void openShopThroughSearchFromCategoryTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory, drawerCategoryRU);
         //open category
         openCategory();
         //open shop
@@ -41,7 +45,7 @@ public class CategoryTest extends BaseTest {
     //@Test
     public void checkCountSalesTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerCategory,drawerCategoryRU);
+        enterToTheFeatureFromDrawer(locatorDrawerCategory, drawerCategoryRU);
         //open category
         openCategory();
         //open shop
@@ -59,9 +63,9 @@ public class CategoryTest extends BaseTest {
         //String count = countSales.get(random).getText();
         //getCountSales(count);
         //find random category and enter
-        driver.findElement(By.name(category)).click();
+        $(By.name(category)).click();
         //check title
-        assertEqualsText(locatorToolbarTitle, category);
+        assertEquals($(locatorToolbarTitle).getText(),category);
     }
 
     private void getCountSales(String count) {

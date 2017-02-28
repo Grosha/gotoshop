@@ -1,3 +1,5 @@
+package com;
+
 import org.openqa.selenium.By;
 public interface Locators {
     //open drawer
@@ -32,6 +34,7 @@ public interface Locators {
     By locatorCountSalesCategory = By.id("textViewActions");
     By locatorCountSalesShop = By.id("textActions");
     By locatorCountLikes = By.id("textLikes");
+    By locatorCountDislike = By.id("textDislikes");
     By locatorLike = By.id("iconLike");
     By locatorDislike = By.id("iconDislike");
     By locatorStar = By.id("star");
@@ -48,14 +51,37 @@ public interface Locators {
     By locatorDeleteAllSales = By.id("delete_all");
     By locatorDismisDeleteSales = By.id("button2");
     By locatorAcceptDeleteSales = By.id("button1");
+    By locatorCalendar = By.id("action_calendar");
+    By locatorPickerCalendar = By.id("datePickerCaller");
+    By locatorCalendarPreMonth = By.id("prev");
+    By locatorButtonSaveDate = By.id("saveButton");
+    By locatorCalendarDay = By.xpath("//android.view.View[@index='13']");
 
     //drawer menu
     By locatorDrawerCity = By.xpath("//android.widget.CheckedTextView[@text='Город']");
     By locatorDrawerAutorization = By.xpath("//android.widget.CheckedTextView[@text='Мой профиль']");
-    By locatorDrawerShops = By.xpath("//android.widget.CheckedTextView[@text='Город']");
+    By locatorDrawerShops = By.xpath("//android.widget.CheckedTextView[@text='Магазины']");
     By locatorDrawerCategory = By.xpath("//android.widget.CheckedTextView[@text='Категории']");
     By locatorDrawerSales = By.xpath("//android.widget.CheckedTextView[@text='Акции']");
     By locatorDrawerFavorite = By.xpath("//android.widget.CheckedTextView[@text='Избранное']");
-    By locatorDrawerSettings = By.xpath("//android.widget.CheckedTextView[@text='Город']");
+    By locatorDrawerSettings = By.xpath("//android.widget.CheckedTextView[@text='Настройки']");
     By locatorDrawerCallUs = By.xpath("//android.widget.CheckedTextView[@text='Город']");
+
+    //
+    By locatorClosestShopsBlock = By.xpath("//android.widget.RelativeLayout[descendant::android.widget.TextView[@text='Ближайшие']]");
+    By locatorProductShopsBlock = By.xpath("//android.widget.RelativeLayout[descendant::android.widget.TextView[@text='Продукты']]");
+    By locatorTextTurnOnLocation = By.id("info");
+    By locatorDistanceValue = By.id("tv_distance");
+    By locatorFirstShopsBlockName = By.xpath("//android.widget.RelativeLayout[@index=0]//android.widget.TextView[contains(@resource-id,'title')]");
+    By locatorLocationStatus = By.xpath("//android.view.ViewGroup[@index=1]");
+    By locatorLocationStatus_ = By.xpath("//android.view.ViewGroup[descendant::android.widget.TextView[@text='Location']]");
+    By locatorSearchSettings = By.xpath("//android.widget.Button[@resource-id,'search']");
+    By locatorSearchFieldSettings = By.xpath("//android.widget.EditText[@resource-id,'search_src_text']");
+    By locatorLocationSettings = By.xpath("//android.widget.TextView[@text='Location']");
+    By locatorLocationSitcher = By.xpath("//android.widget.Switchm[@resource-id,'switch_widget']");
+    By locatorButtonOKInPopup = By.xpath("//android.widget.Button[@text='OK']");
+    By locatorButtonCancelInPopup = By.xpath("//android.widget.Button[@text='Cancel']");
+    By locatorTextShowClosestShopsRU_ = By.xpath("//android.widget.Switch[preceding::android.widget.TextView[@text='Показывать ближайшие магазины']]");
+    By locatorTextDeleteOldSalesRU = By.xpath("//android.widget.Switch[preceding::android.widget.TextView[@text='Удалять прошедшие акции']]");
+
 }

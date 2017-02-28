@@ -1,23 +1,28 @@
+package com.portret;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.testng.Assert.assertEquals;
+
 public class AutorizationTest extends BaseTest {
 
     @Test
     public void openMyAccountTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization,drawerMyAccountRU);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        //checkBoxIsSelected(locatorCheckboxRememberMe);
     }
 
-    @Test
+    //@Test
     public void loginGoogleTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
-        driver.findElement(locatorLoginGoogle).click();
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        $(locatorLoginGoogle).click();
         timeOut(3L);
 
         Set<String> windowId = driver.getWindowHandles();    // get  window id of current window
@@ -29,36 +34,43 @@ public class AutorizationTest extends BaseTest {
         driver.switchTo().window(newAdwinID);
         System.out.println(driver.getTitle());
         timeOut(3L);
-        String email = driver.findElement(locatorEmailName).getText();
-        driver.findElement(locatorGoogleAccount).click();
+        String email = $(locatorEmailName).getText();
+        $(locatorGoogleAccount).click();
         driver.close();
 
         driver.switchTo().window(mainWinID);
         timeOut(3L);
 
-        assertEqualsText(locatorToolbarTitle, drawerMyAccountRU);
-        assertEqualsText(locatorFieldEmail, email);
+        assertEquals($(locatorToolbarTitle).getText(),drawerMyAccountRU);
+        assertEquals($(locatorFieldEmail).getText(),email);
     }
 
     @Test
     public void logInOldUserTest() throws InterruptedException {
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
         signIn();
     }
 
     @Test
     public void logInLogOutOldUserTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
         //sign in
+        try {
+            $(locatorButtonEnter);
+        }catch (NoSuchElementException e){
+            $(locatorLogOut).click();
+            $(locatorButtonEnter);
+        }
         enterUserData(email, password, true);
         //check account's data
         checkAccountData(nickName, email);
         //log out
         clickLogOut();
-        //check function remember me
-        assertEqualsText(locatorFieldEmail, email);
         //off checkbox remember me
-        rememberMeClick();
+        //rememberMeClick();
+        //check function remember me
+        //assertEqualsText(locatorFieldEmail, email);
     }
 
     @Test
@@ -70,7 +82,7 @@ public class AutorizationTest extends BaseTest {
     @Test
     public void registerNewUserTest() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
         createNewUser();
         clickLogOut();
     }
@@ -78,9 +90,14 @@ public class AutorizationTest extends BaseTest {
     @Test
     public void changePasswordAndSignIn() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
-        driver.findElement(locatorRegistration).click();
-        assertEqualsText(locatorRegistration, toolbarRegistration);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        try {
+            $(locatorRegistration).click();
+        }catch (NoSuchElementException e){
+            $(locatorLogOut).click();
+            $(locatorRegistration).click();
+        }
+        assertEquals($(locatorRegistration).getText(),toolbarRegistration);
         //create new user name and email
         String temp = String.valueOf(new Date().getTime());
         String name = temp + testNickName;
@@ -105,27 +122,32 @@ public class AutorizationTest extends BaseTest {
 
     private void enterNewUserData(String name, String email) {
         //form filling
-        driver.findElement(locatorFieldNickname).sendKeys(name);
-        driver.findElement(locatorFieldEmail).sendKeys(email);
-        driver.findElement(locatorFieldPassword).sendKeys(password);
-        driver.findElement(locatorFieldRepeatPassword).sendKeys(password);
+        $(locatorFieldNickname).sendKeys(name);
+        $(locatorFieldEmail).sendKeys(email);
+        $(locatorFieldPassword).sendKeys(password);
+        $(locatorFieldRepeatPassword).sendKeys(password);
         driver.navigate().back();
-        driver.findElement(locatorButtonRegistration).click();
+        $(locatorButtonRegistration).click();
         timeOut(10L);
     }
 
     private void changePassword(String password, String newPassword) {
         //change password
-        driver.findElement(locatorFieldOldPassword).sendKeys(password);
-        driver.findElement(locatorFieldPassword).sendKeys(newPassword);
-        driver.findElement(locatorFieldRepeatPassword).sendKeys(newPassword);
+        $(locatorFieldOldPassword).sendKeys(password);
+        $(locatorFieldPassword).sendKeys(newPassword);
+        $(locatorFieldRepeatPassword).sendKeys(newPassword);
         driver.navigate().back();
-        driver.findElement(locatorButtonSave).click();
+        $(locatorButtonSave).click();
     }
 
-    private void createNewUser() {
-        driver.findElement(locatorRegistration).click();
-        assertEqualsText(locatorRegistration, toolbarRegistration);
+    private void createNewUser() throws InterruptedException {
+        try {
+            $(locatorRegistration).click();
+        }catch (NoSuchElementException e){
+            $(locatorLogOut).click();
+            $(locatorRegistration).click();
+        }
+        assertEquals($(locatorRegistration).getText(),toolbarRegistration);
         //create new user name and email
         String temp = String.valueOf(new Date().getTime());
         String name = temp + testNickName;

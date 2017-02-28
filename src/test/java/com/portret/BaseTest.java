@@ -1,59 +1,28 @@
+package com.portret;
+
+import com.SetUpAppium;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import junit.framework.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by groshkka on 07.11.2016.
- */
-public class BaseTest implements Variable, Locators {
-    protected AppiumDriver<WebElement> driver;
+import static org.testng.Assert.assertEquals;
 
-    @BeforeClass
-    public void setUp() throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("deviceName", "Android Emulator");
-        capabilities.setCapability("platformVersion", "5.1");
-
-        capabilities.setCapability("appPackage", packageGoToShop);
-        capabilities.setCapability("appWaitPackage", packageGoToShop);
-        capabilities.setCapability("appActivity", mainActivity);
-        driver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    }
-
-    @AfterClass
-    public void setDown() {
-        driver.quit();
-    }
-
-    public void assertEqualsText(By locator, String text) {
-        String textElement = driver.findElement(locator).getText();
-        Assert.assertEquals(text, textElement);
-    }
+public class BaseTest extends SetUpAppium {
 
     public void assertEqualsInt(By locator, int number) {
-        int numberElement = Integer.parseInt(driver.findElement(locator).getText());
+        int numberElement = Integer.parseInt($(locator).getText());
         System.out.println(numberElement);
         System.out.println(number);
-        Assert.assertEquals(numberElement, number);
-    }
-
-    public AppiumDriver<WebElement> findElement(By by) {
-
-        return driver;
+        assertEquals(numberElement, number);
     }
 
     public AppiumDriver<WebElement> timeOut(Long seconds) {
@@ -64,7 +33,7 @@ public class BaseTest implements Variable, Locators {
     public void openDrawer() throws InterruptedException {
         //open drawer
         Thread.sleep(5000);
-        driver.findElement(locatorOpenDrawer).click();
+        $(locatorOpenDrawer).click();
         timeOut(10L);
     }
 
@@ -72,10 +41,10 @@ public class BaseTest implements Variable, Locators {
         //open drawer
         openDrawer();
         //enter to the feature from drawer
-        driver.findElement(drawerFeatureName).click();
+        $(drawerFeatureName).click();
         timeOut(10L);
         //check title
-        assertEqualsText(locatorToolbarTitle, toolbarTitle);
+        assertEquals($(locatorToolbarTitle).getText(),toolbarTitle);
     }
 
     public void openShop(By shopIdentofocation, boolean search) {
@@ -89,53 +58,52 @@ public class BaseTest implements Variable, Locators {
             //get shop
             shopName = shops.get(random).getText();
             //enter shop's name
-            driver.findElement(shopInput).sendKeys(shopName);
+            $(shopInput).sendKeys(shopName);
         } else {
             //get random shop
-
             shopName = shops.get(random).getText();
         }
         //find random shop and enter
-        driver.findElement(By.name(shopName)).click();
+        $(By.name(shopName)).click();
         //check title
-        assertEqualsText(locatorToolbarTitle, shopName);
+        assertEquals($(locatorToolbarTitle).getText(),shopName);
     }
 
     public void enterUserData(String email, String password, boolean remember) {
         //enter email and password - sign in
-        driver.findElement(locatorFieldEmail).clear();
-        driver.findElement(locatorFieldEmail).sendKeys(email);
-        driver.findElement(locatorFieldPassword).sendKeys(password);
+        $(locatorFieldEmail).clear();
+        $(locatorFieldEmail).sendKeys(email);
+        $(locatorFieldPassword).sendKeys(password);
         if (remember == true) {
-            rememberMeClick();
+            //checkBoxIsSelected(locatorCheckboxRememberMe);
+            //rememberMeClick();
         }
-        driver.findElement(locatorButtonEnter).click();
+        $(locatorButtonEnter).click();
     }
 
     public void rememberMeClick() {
-        driver.findElement(locatorCheckboxRememberMe).click();
+        $(locatorCheckboxRememberMe).click();
     }
 
     public void clickLogOut() {
         //log out
         WebDriverWait wait = new WebDriverWait(driver, 5L);
-        driver.findElement(locatorLogOut).click();
+        $(locatorLogOut).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(locatorButtonEnter));
-        driver.findElement(locatorButtonEnter).isDisplayed();
+        $(locatorButtonEnter).isDisplayed();
     }
 
     public void checkAccountData(String name, String email) {
         //check account's data
         WebDriverWait wait = new WebDriverWait(driver, 5L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locatorFieldNickname));
-        assertEqualsText(locatorToolbarTitle, drawerMyAccountRU);
-        assertEqualsText(locatorFieldNickname, name);
-        assertEqualsText(locatorFieldEmail, email);
+        assertEquals($(locatorToolbarTitle).getText(),drawerMyAccountRU);
+        assertEquals($(locatorFieldNickname).getText(),name);
+        assertEquals($(locatorFieldEmail).getText(),email);
     }
 
     public void signIn() throws InterruptedException {
         //enter to the feature from drawer
-        enterToTheFeatureFromDrawer(locatorDrawerAutorization,apkName);
         //sign in
         enterUserData(email, password, false);
         //check account's data
@@ -151,12 +119,22 @@ public class BaseTest implements Variable, Locators {
 
     public void waitElement(By element) {
         //wait comment
-        WebDriverWait wait = new WebDriverWait(driver, 5L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+        }catch (TimeoutException exception){
+            System.out.println(element + " does not apear");
+        }catch (NoSuchElementException e){
+            System.out.println(element + " not found");
+        }
+
+
     }
 
     public void checkCountSalesDrawer(int count) throws InterruptedException {
+        System.out.println("count - " + count);
         //open drawer
+        $(locatorToolbarTitle);
         openDrawer();
         //compare count sales
         Thread.sleep(500);
@@ -169,8 +147,35 @@ public class BaseTest implements Variable, Locators {
         openDrawer();
         //save number love sales
         Thread.sleep(500);
-        int numberSales = Integer.parseInt(driver.findElement(locatorNumberSales).getText());
-        System.out.println(numberSales);
+        int numberSales = Integer.parseInt($(locatorNumberSales).getText());
+        System.out.println("numberSales - "+numberSales);
         return numberSales;
+    }
+
+    public WebElement $(By by) {
+        waitElement(by);
+        return driver.findElement(by);
+    }
+
+    public void rotetaLandscape() {
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+    }
+
+    public void checkBoxIsSelected(By element) {
+        boolean is = $(element).isSelected();
+        System.out.println(is);
+        if (is == false) {
+            System.out.println("no select");
+            $(element).click();
+        }
+    }
+
+    public void openShop(String shopName) {
+        //enter shop's name
+        $(shopInput).sendKeys(shopName);
+        //find random shop and enter
+        $(By.name(shopName)).click();
+        //check title
+        assertEquals($(locatorToolbarTitle).getText(),shopName,"Wrong toolbar title with shop");
     }
 }
