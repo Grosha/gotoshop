@@ -66,6 +66,7 @@ public class SaleTest extends BaseTest {
             $(locatorLogOut);
         }catch (NoSuchElementException e){
             signIn();
+
         }
         //enter to the feature from drawer
         driver.navigate().back();
