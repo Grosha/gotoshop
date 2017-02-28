@@ -1,9 +1,13 @@
+package com.portret;
+
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by groshkka on 08.11.2016.
  */
-public class ShopsTest extends BaseTest {
+public class ShopsTest extends com.portret.BaseTest {
 
     @Test
     public void openShopTest() throws InterruptedException {
@@ -26,16 +30,16 @@ public class ShopsTest extends BaseTest {
         openShop(openShop, false);
 
         //find sale name
-        String saleName = driver.findElement(locatorSaleTitle).getText();
+        String saleName = $(locatorSaleTitle).getText();
         System.out.println(saleName);
 
         //open sale
-        driver.findElement(locatorSaleImage).click();
+        $(locatorSaleImage).click();
 
         //check toolbar name
-        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
+        assertEquals($(locatorToolbarTitle).getText(),drawerSaleRU);
         //check saleName
-        assertEqualsText(locatorSaleTitle, saleName);
+        assertEquals($(locatorSaleTitle).getText(),saleName);
     }
 
 }

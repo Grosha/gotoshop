@@ -1,4 +1,7 @@
+package com.portret;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -6,6 +9,7 @@ import static org.testng.Assert.assertEquals;
 public class SaleTest extends BaseTest {
     @Test
     public void openSaleTest() throws InterruptedException {
+        timeOut(start);
         //enter to the feature from drawer
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //open sale
@@ -14,45 +18,82 @@ public class SaleTest extends BaseTest {
 
     @Test
     public void likeLogOutTest() throws InterruptedException {
+        timeOut(start);
+        //check authorization
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        //sign in
+        try {
+            $(locatorButtonEnter);
+        }catch (NoSuchElementException e){
+            $(locatorLogOut).click();
+            $(locatorButtonEnter);
+        }
         //enter to the feature from drawer
+        driver.navigate().back();
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
+
         //try ty increment likes
-        managerLikes(locatorLike, false, true);
+        managerLikes(locatorCountLikes, false, true);
     }
 
     @Test
     public void dislikeLogOutTest() throws InterruptedException {
+        timeOut(start);
+        //check authorization
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        //sign in
+        try {
+            $(locatorButtonEnter);
+        }catch (NoSuchElementException e){
+            $(locatorLogOut).click();
+            $(locatorButtonEnter);
+        }
         //enter to the feature from drawer
+        driver.navigate().back();
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //check title
-        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
+        assertEquals($(locatorToolbarTitle).getText(),drawerSaleRU);
         //try ty decrement likes
-        managerLikes(locatorDislike, false, false);
+        managerLikes(locatorCountDislike, false, false);
     }
 
     @Test
     public void likeSignInTest() throws InterruptedException {
+        timeOut(start);
         //sign in
-        signIn();
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        try {
+            $(locatorLogOut);
+        }catch (NoSuchElementException e){
+            signIn();
+        }
         //enter to the feature from drawer
-        openDrawer();
+        driver.navigate().back();
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //try ty increment likes
-        managerLikes(locatorLike, true, true);
+        openSale();
+        managerLikes(locatorCountLikes, true, true);
         //log out
         logOut();
     }
 
     @Test
     public void dislikeSignInTest() throws InterruptedException {
+        timeOut(start);
         // передумати логіку лайків
         //sign in
-        signIn();
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        try {
+            $(locatorLogOut);
+        }catch (NoSuchElementException e){
+            signIn();
+        }
         //enter to the feature from drawer
-        openDrawer();
+        driver.navigate().back();
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //try ty decrement likes
-        managerLikes(locatorDislike, true, false);
+        openSale();
+        managerLikes(locatorCountDislike, true, true);
         //log out
         logOut();
     }
@@ -61,39 +102,34 @@ public class SaleTest extends BaseTest {
     public void addSaleToFavoriteLogOutTest() throws InterruptedException {
         int numberSales = getCountSales();
         //enter to the feature from drawer
-        driver.findElement(locatorDrawerSales).click();
+        $(locatorDrawerSales).click();
         timeOut(10L);
         //check title
-        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
+        assertEquals($(locatorToolbarTitle).getText(),drawerSaleRU);
         //click on star
-        driver.findElement(locatorStar).click();
+        $(locatorStar).click();
         checkCountSalesDrawer(numberSales);
     }
 
     @Test
     public void addSaleToFavoriteSignInTest() throws InterruptedException {
-        /*//open drawer
-        openDrawer();
-        //save number love sales
-        Thread.sleep(500);
-        int numberSales = Integer.parseInt(driver.findElement(locatorNumberSales).getText());
-        System.out.println(numberSales);
-        //enter to the feature from drawer
-        driver.findElement(locatorDrawerAutorization).click();
-        timeOut(10L);
-        //sign in
-        enterUserData(email, password, false);
-        //check account's data
-        checkAccountData(nickName, email);*/
-        signIn();
+        timeOut(start);
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        try {
+            $(locatorLogOut);
+        }catch (NoSuchElementException e){
+            signIn();
+        }
         int numberSales = getCountSales();
         //enter to the feature from drawer
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //find sale name
-        String saleName = driver.findElement(locatorSaleTitle).getText();
+        String saleName = $(locatorSaleTitle).getText();
         System.out.println(saleName);
         //click on star
-        driver.findElement(locatorStar).click();
+        $(locatorStar).click();
+        enterToTheFeatureFromDrawer(locatorDrawerFavorite, toolbarFavorite);
+        driver.runAppInBackground(2);
         checkCountSalesDrawer(++numberSales);
         //
         logOut();
@@ -101,6 +137,7 @@ public class SaleTest extends BaseTest {
 
     @Test
     public void openMapFromSaleTest() throws InterruptedException {
+        timeOut(start);
         //enter to the feature from drawer
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //open sale
@@ -108,13 +145,14 @@ public class SaleTest extends BaseTest {
         //open map
         //scroll to the comment
         driver.scrollTo(comment);
-        driver.findElement(locatorIconMap).click();
+        $(locatorIconMap).click();
         //wait map view
         waitElement(locatorMapView);
     }
 
     @Test
     public void addCommentLogOutTest() throws InterruptedException {
+        timeOut(start);
         //enter to the feature from drawer
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //open sale
@@ -122,86 +160,79 @@ public class SaleTest extends BaseTest {
         //scroll to the comment
         driver.scrollTo(comment);
         //save number comment
-        String numberComment = driver.findElement(locatorNumComments).getText();
+        String numberComment = $(locatorNumComments).getText();
         //enter comment
-        driver.findElement(locatorMyComment).sendKeys(testComment);
-        //close keyboard
-        driver.navigate().back();
-        //send comment
-        driver.findElement(locatorSendComment).click();
+        enterComment();
         //check number comments
-        assertEqualsText(locatorNumComments, numberComment);
+        assertEquals($(locatorNumComments).getText(),numberComment);
     }
 
     @Test
     public void addCommentSignInTest() throws InterruptedException {
+        timeOut(start);
         //sign in
-        signIn();
+        enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
+        try {
+            $(locatorLogOut);
+        }catch (NoSuchElementException e){
+            signIn();
+        }
         //enter to the feature from drawer
         openDrawer();
         enterToTheFeatureFromDrawer(locatorDrawerSales, drawerSaleRU);
         //open sale
         openSale();
         //save number comment
-        int numberComment = Integer.parseInt(driver.findElement(locatorNumComments).getText());
+        int numberComment = Integer.parseInt($(locatorNumComments).getText());
         //scroll to the comment
         driver.scrollTo(comment);
         //enter comment
-        driver.findElement(locatorMyComment).sendKeys(testComment);
-        //close keyboard
-        driver.navigate().back();
-        //send comment
-        driver.findElement(locatorSendComment).click();
+        enterComment();
+        driver.scrollTo("ОСТАВИТЬ ОТЗЫВ");
+        $(locatorSendComment).click();
         //wait comment
         waitElement(locatorFindComment);
         //check number comments
         assertEqualsInt(locatorNumComments, ++numberComment);
     }
 
-    /*public void addCoTest() throws InterruptedException {
-        enterToTheFeatureFromDrawer(locatorDrawerSales);
-        //check title
-        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
-        //open sale
-        //find sale
-        driver.swipe(280, 1100, 280, 245, 2000);
-        WebElement d = driver.findElement(locatorSaleImage);
-
-        String saleName = d.getText();
-        System.out.println(saleName);
-        //open sale
-        d.click();
-        //check toolbar name
-        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
-        //check saleName
-        //assertEqualsText(locatorSaleTitle, saleName);
-    }*/
-
     private void openSale() {
         //find sale
-        String saleName = driver.findElement(locatorSaleTitle).getText();
+        String saleName = $(locatorSaleTitle).getText();
         System.out.println(saleName);
         //open sale
-        driver.findElement(locatorSaleImage).click();
+        $(locatorSaleImage).click();
         //check toolbar name
-        assertEqualsText(locatorToolbarTitle, drawerSaleRU);
+        assertEquals($(locatorToolbarTitle).getText(),drawerSaleRU);
         //check saleName
-        assertEqualsText(locatorSaleTitle, saleName);
+        assertEquals($(locatorSaleTitle).getText(),saleName);
+    }
+
+    private void enterComment() {
+        //enter comment
+        $(locatorMyComment).sendKeys(testComment);
+        //close keyboard
+        driver.navigate().back();
+        //send comment
+        $(locatorSendComment).click();
+        //check number comments
     }
 
     private void managerLikes(By likesChanger, boolean signIn, boolean increment) {
+        driver.scrollTo(comment);
         //get count likes
-        int countLikesBefore = Integer.parseInt(driver.findElement(locatorCountLikes).getText());
+        int countLikesBefore = Integer.parseInt($(likesChanger).getText());
         //click on likes
-        driver.findElement(likesChanger).click();
+        $(likesChanger).click();
         //get count likes
-        int countLikesAfter = Integer.parseInt(driver.findElement(locatorCountLikes).getText());
+        int countLikesAfter = Integer.parseInt($(likesChanger).getText());
         //compare likes
         if (signIn == true && increment == true) {
             assertEquals(countLikesAfter, ++countLikesBefore);
-        } else if (signIn == true && increment == false) {
-            assertEquals(countLikesAfter, --countLikesBefore);
-        } else assertEquals(countLikesAfter, countLikesBefore);
+        } else {
+            assertEquals(countLikesAfter, countLikesBefore);
+        }
+        driver.navigate().back();
     }
 
 }
