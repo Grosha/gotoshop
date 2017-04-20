@@ -18,7 +18,7 @@ public class ShopsTest extends com.portret.BaseTest {
 
     @Test
     public void findShopThroughSearchTest() throws InterruptedException {
-        Thread.sleep(5000);
+        wait(5000);
         //open shop
         openShop(openShop, true);
     }

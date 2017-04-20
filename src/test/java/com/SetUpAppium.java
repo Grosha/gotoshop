@@ -18,7 +18,7 @@ public class SetUpAppium implements Variable, Locators {
     public void setUp() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("deviceName", "Android Emulator");
-        capabilities.setCapability("platformVersion", "5.1");
+        capabilities.setCapability("platformVersion", "6.0");
 
         capabilities.setCapability("appPackage", packageGoToShop);
         capabilities.setCapability("appWaitPackage", packageGoToShop);

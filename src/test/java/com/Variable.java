@@ -41,6 +41,9 @@ public interface Variable {
 
     String LOCATION = "Location";
     String TextTurnOnLocation = "Включите GPS для просмотра";
+    String OFF = "ВЫКЛ.";
+    String ON = "ВКЛ.";
+
 
     //adb
     String TurnOnLocation = "adb shell settings put secure location_providers_allowed +gps";

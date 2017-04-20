@@ -25,21 +25,9 @@ public class AutorizationTest extends BaseTest {
         $(locatorLoginGoogle).click();
         timeOut(3L);
 
-        Set<String> windowId = driver.getWindowHandles();    // get  window id of current window
-        Iterator<String> itererator = windowId.iterator();
-
-        String mainWinID = itererator.next();
-        String newAdwinID = itererator.next();
-
-        driver.switchTo().window(newAdwinID);
-        System.out.println(driver.getTitle());
-        timeOut(3L);
         String email = $(locatorEmailName).getText();
         $(locatorGoogleAccount).click();
         driver.close();
-
-        driver.switchTo().window(mainWinID);
-        timeOut(3L);
 
         assertEquals($(locatorToolbarTitle).getText(),drawerMyAccountRU);
         assertEquals($(locatorFieldEmail).getText(),email);

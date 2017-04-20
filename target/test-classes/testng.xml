@@ -1,0 +1,81 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Gotoshop" verbose="1">
+    <!--<test name="test AutorizationTest">-->
+        <!--<classes>-->
+            <!--<class name="com.portret.AutorizationTest">-->
+                <!--<methods>-->
+                    <!--<include name="openMyAccountTest"/>-->
+                    <!--<include name="logInLogOutOldUserTest"/>-->
+                    <!--<include name="registerNewUserTest"/>-->
+                    <!--<include name="changePasswordAndSignIn"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!--<test name="test ShopsTest">-->
+        <!--<classes>-->
+            <!--<class name="com.portret.ShopsTest">-->
+                <!--<methods>-->
+                    <!--<include name="openShopTest"/>-->
+                    <!--<include name="findShopThroughSearchTest"/>-->
+                    <!--<include name="openSaleFromShopTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!--<test name="test FavoritesSalesTest">-->
+        <!--<classes>-->
+            <!--<class name="com.portret.FavoritesSalesTest">-->
+                <!--<methods>-->
+                    <!--<include name="openFavoriteSalesLogOutTest"/>-->
+                    <!--<include name="acceptDeleteSalesFromFavoriteTest"/>-->
+                    <!--<include name="dismissDeleteSalesFromFavoriteTest"/>-->
+                    <!--<include name="deleteSaleFromFavoriteTest"/>-->
+                    <!--<include name="addSaleToTheFavorite"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <test name="test SaleTest">
+        <classes>
+            <class name="com.portret.SaleTest">
+                <methods>
+                    <include name="openSaleTest"/>
+                    <include name="likeLogOutTest"/>
+                    <include name="dislikeLogOutTest"/>
+                    <include name="likeSignInTest"/>
+                    <include name="dislikeSignInTest"/>
+                    <include name="addSaleToFavoriteLogOutTest"/>
+                    <include name="openMapFromSaleTest"/>
+                    <include name="addCommentLogOutTest"/>
+                    <include name="addCommentSignInTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <!--<test name="test CategoryTest">-->
+        <!--<classes>-->
+            <!--<class name="com.portret.CategoryTest">-->
+                <!--<methods>-->
+                    <!--<include name="openCategoryShopsTest"/>-->
+                    <!--<include name="openShopFromCategoryTest"/>-->
+                    <!--<include name="openShopThroughSearchFromCategoryTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!--<test name="test SettingsTest">-->
+        <!--<classes>-->
+            <!--<class name="com.portret.SettingsTest">-->
+                <!--<methods>-->
+                    <!--<include name="testBlockClosestShopsWhenLocationOff"/>-->
+                    <!--<include name="testBlockClosestShopsWhenLocationOn"/>-->
+                    <!--<include name="testTurnOffFeatureClosestShops"/>-->
+                    <!--<include name="testTurnOnFeatureClosestShops"/>-->
+                    <!--<include name="testDeleteOldSales"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+</suite>

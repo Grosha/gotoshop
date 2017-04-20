@@ -4,15 +4,16 @@ import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Created by groshkka on 21.02.2017.
  */
 public class SettingsTest extends BaseTest {
-
 
     @Test
     public void testBlockClosestShopsWhenLocationOff() throws InterruptedException, IOException {
@@ -23,7 +24,7 @@ public class SettingsTest extends BaseTest {
         if (nameBlock.equals(BlockNameClosestRU)) {
             conditionForTextTurnOn();
         } else if (nameBlock.equals(BlockNameProductsRU)) {
-            switcherFeatureInSettings("OFF");
+            switcherFeatureInSettings(OFF);
             conditionForTextTurnOn();
         }
     }
@@ -37,7 +38,7 @@ public class SettingsTest extends BaseTest {
         if (nameBlock.equals(BlockNameClosestRU)) {
             clickOnTextTurnOnLocation();
         } else if (nameBlock.equals(BlockNameProductsRU)) {
-            switcherFeatureInSettings("OFF");
+            switcherFeatureInSettings(OFF);
             clickOnTextTurnOnLocation();
         }
     }
@@ -51,21 +52,21 @@ public class SettingsTest extends BaseTest {
         try {
             assertNotNull($(locatorDistanceValue));
             //turnOffLocation();
-        }catch (NoSuchElementException exception){
+        } catch (NoSuchElementException exception) {
             //everything is ok
         }
         System.out.println(nameBlock);
         if (nameBlock.equals(BlockNameClosestRU)) {
             System.out.println(1);
-            switcherFeatureInSettings("ON");
+            switcherFeatureInSettings(ON);
             checkBlockClosestShop();
         } else if (nameBlock.equals(BlockNameProductsRU)) {
             System.out.println(2);
-            switcherFeatureInSettings("OFF");
+            switcherFeatureInSettings(OFF);
             checkBlockClosestShop();
             //check enable text for turn on location
             assertEquals($(locatorTextTurnOnLocation).getText(), TextTurnOnLocation);
-            switcherFeatureInSettings("ON");
+            switcherFeatureInSettings(ON);
             checkBlockClosestShop();
         }
 
@@ -80,20 +81,20 @@ public class SettingsTest extends BaseTest {
         try {
             assertNotNull($(locatorDistanceValue));
             //turnOffLocation();
-        }catch (NoSuchElementException exception){
+        } catch (NoSuchElementException exception) {
             //everything is ok
         }
 
         System.out.println(nameBlock);
         if (nameBlock.equals(BlockNameProductsRU)) {
             System.out.println(1);
-            switcherFeatureInSettings("OFF");
+            switcherFeatureInSettings(OFF);
             checkBlockClosestShop();
         } else if (nameBlock.equals(BlockNameClosestRU)) {
             System.out.println(2);
-            switcherFeatureInSettings("ON");
+            switcherFeatureInSettings(ON);
             checkBlockClosestShop();
-            switcherFeatureInSettings("OFF");
+            switcherFeatureInSettings(OFF);
             checkBlockClosestShop();
         }
     }
@@ -104,22 +105,22 @@ public class SettingsTest extends BaseTest {
         //check that user is authorized, if no - sign in
         enterToTheFeatureFromDrawer(locatorDrawerAutorization, drawerMyAccountRU);
         try {
-          $(locatorLogOut);
-        }catch (NoSuchElementException e){
+            $(locatorLogOut);
+        } catch (NoSuchElementException e) {
             signIn();
         }
         //turn off feature 'delete old sales'
         driver.navigate().back();
         enterToTheFeatureFromDrawer(locatorDrawerSettings, drawerSettingsRU);
         assertNotNull($(locatorTextDeleteOldSalesRU));
-        if ($(locatorTextDeleteOldSalesRU).getText().equals("ON")) {
+        if ($(locatorTextDeleteOldSalesRU).getText().equals(OFF)) {
             //turn on feature closest shops
             $(locatorTextDeleteOldSalesRU).click();
         }
         driver.navigate().back();
 
         waitElement(locatorFirstShopsBlockName);
-        assertEquals($(locatorToolbarTitle).getText(), drawerShopRU,"Wrong toolbar title");
+        assertEquals($(locatorToolbarTitle).getText(), drawerShopRU, "Wrong toolbar title");
         //set last day
         openShop(ShopBILLA);
         chooseDayInCalendar();
@@ -129,7 +130,7 @@ public class SettingsTest extends BaseTest {
         //turn on feature 'delete old sales'
         enterToTheFeatureFromDrawer(locatorDrawerSettings, drawerSettingsRU);
         assertNotNull($(locatorTextDeleteOldSalesRU));
-        if ($(locatorTextDeleteOldSalesRU).getText().equals("OFF")) {
+        if ($(locatorTextDeleteOldSalesRU).getText().equals(OFF)) {
             //turn on feature closest shops
             $(locatorTextDeleteOldSalesRU).click();
         }
@@ -169,14 +170,14 @@ public class SettingsTest extends BaseTest {
         //check enable block ProductsShops
         assertNotNull($(locatorProductShopsBlock));
         //check block name ProductsShops
-        assertEquals($(locatorFirstShopsBlockName).getText(), BlockNameProductsRU,"Wrong product block's name");
+        assertEquals($(locatorFirstShopsBlockName).getText(), BlockNameProductsRU, "Wrong product block's name");
     }
 
     private void checkBlockProductShop() {
         //check enable block ClosestShops
         assertNotNull($(locatorClosestShopsBlock));
         //check block name ClosestShops
-        assertEquals($(locatorFirstShopsBlockName).getText(), BlockNameClosestRU,"Wrong closest shop block's name");
+        assertEquals($(locatorFirstShopsBlockName).getText(), BlockNameClosestRU, "Wrong closest shop block's name");
     }
 
     private void turnOnLocationVIAPopup() {
@@ -192,15 +193,17 @@ public class SettingsTest extends BaseTest {
 
     private void switcherFeatureInSettings(String status) throws InterruptedException {
         enterToTheFeatureFromDrawer(locatorDrawerSettings, drawerSettingsRU);
+        driver.scrollTo("Показывать ближайшие магазины");
         assertNotNull($(locatorTextShowClosestShopsRU_));
         //check that feature closest shops is turned on
         //boolean statusClosestShop = false;
-        if ($(locatorTextShowClosestShopsRU_).getText().equals(status)) {
+        String statusClosestShop = $(locatorTextShowClosestShopsRU_).getText();
+        if (statusClosestShop.equals(status)) {
             //turn on feature closest shops
             $(locatorTextShowClosestShopsRU_).click();
             driver.navigate().back();
-            assertEquals($(locatorToolbarTitle).getText(), drawerShopRU,"Wrong toolbar title");
-        }else driver.navigate().back();
+            assertEquals($(locatorToolbarTitle).getText(), drawerShopRU, "Wrong toolbar title");
+        } else driver.navigate().back();
     }
 
     private void clickOnTextTurnOnLocation() throws InterruptedException {
@@ -226,11 +229,11 @@ public class SettingsTest extends BaseTest {
 
     }
 
-    private void chooseDayInCalendar(){
+    private void chooseDayInCalendar() {
         //open filter by date
         $(locatorCalendar).click();
         //check title
-        assertEquals($(locatorToolbarTitle).getText(),filtreByDateRU,"Wrong toolbar title with calendar");
+        assertEquals($(locatorToolbarTitle).getText(), filtreByDateRU, "Wrong toolbar title with calendar");
         //open calendar
         $(locatorPickerCalendar).click();
         //return some month

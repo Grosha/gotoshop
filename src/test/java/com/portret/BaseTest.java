@@ -174,7 +174,8 @@ public class BaseTest extends SetUpAppium {
         //enter shop's name
         $(shopInput).sendKeys(shopName);
         //find random shop and enter
-        $(By.name(shopName)).click();
+        //$(By.linkText(shopName)).click();
+        $(locatorShopName).click();
         //check title
         assertEquals($(locatorToolbarTitle).getText(),shopName,"Wrong toolbar title with shop");
     }

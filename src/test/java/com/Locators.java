@@ -51,11 +51,12 @@ public interface Locators {
     By locatorDeleteAllSales = By.id("delete_all");
     By locatorDismisDeleteSales = By.id("button2");
     By locatorAcceptDeleteSales = By.id("button1");
-    By locatorCalendar = By.id("action_calendar");
+    By locatorCalendar = By.id("action_filter_date");
     By locatorPickerCalendar = By.id("datePickerCaller");
     By locatorCalendarPreMonth = By.id("prev");
     By locatorButtonSaveDate = By.id("saveButton");
     By locatorCalendarDay = By.xpath("//android.view.View[@index='13']");
+    By locatorShopName = By.xpath("//android.widget.TextView[contains(@resource-id,'name')]");
 
     //drawer menu
     By locatorDrawerCity = By.xpath("//android.widget.CheckedTextView[@text='Город']");
