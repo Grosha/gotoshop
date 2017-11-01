@@ -11,11 +11,14 @@ public interface Locators {
     By shopInput = By.id("shop_input");
     By locatorSaleTitle = By.xpath("//android.widget.RelativeLayout[contains(@resource-id,'tTitle')]//android.widget.TextView[contains(@resource-id,'title')]");
     By locatorSaleImage = By.id("tImage");
-    By locatorLoginGoogle = By.id("gp");
+
     By locatorGoogleAccount = By.id("account_profile_picture");
     By locatorEmailName = By.id("account_name");
+
+    By locatorLoginGoogle = By.id("gp");
     By locatorLoginFB = By.id("fb");
     By locatorLoginVK = By.id("vk");
+
     By locatorFieldEmail = By.id("email");
     By locatorFieldPassword = By.id("password");
     By locatorFieldRepeatPassword = By.id("password_again");

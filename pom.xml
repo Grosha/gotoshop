@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.1.1</version>
+            <version>6.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -43,6 +43,4 @@
             <type>maven-plugin</type>
         </dependency>
     </dependencies>
-
-
 </project>

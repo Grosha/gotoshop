@@ -54,9 +54,8 @@ public class BaseTest implements Variable, Locators {
         return driver;
     }
 
-    public AppiumDriver<WebElement> timeOut(Long seconds) {
+    public void timeOut(Long seconds) {
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
-        return driver;
     }
 
     public void openDrawer() throws InterruptedException {
